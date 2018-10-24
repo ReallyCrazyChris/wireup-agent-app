@@ -48,12 +48,11 @@ const actions = {
     }
 
     ws.onmessage = function (event) {
-      console.log('WebSocket got Data', event.data)
-
       var reader = new FileReader()
 
       reader.onload = function () {
         var agentdata = decode(reader.result, 'utf8')
+        console.log('WebSocket got Data', agentdata)
         store.dispatch(agentdata[0], agentdata[1], { root: true })
       }
 

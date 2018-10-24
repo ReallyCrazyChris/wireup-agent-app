@@ -1,6 +1,7 @@
 <template>
   <div class="productheader">
-    <img class="image" :src="imageurl" draggable="false"/>
+    <img class="image" v-if="imageurl" :src="imageurl" draggable="false"/>
+    <div class="image" v-else />
     <div class="company"> {{ company }}</div>
     <div class="name"> {{ name }}</div>
     <div class="description"> {{ description }} </div>
@@ -30,6 +31,8 @@ export default {
   grid-column: 1 / span 2;
   grid-row: 1 / span 3;
   width: 100%;
+  border-top: 1px solid #2196f3;
+  border-bottom: 1px solid #2196f3;
 }
 
 .name {

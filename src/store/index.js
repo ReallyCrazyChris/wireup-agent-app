@@ -25,7 +25,16 @@ export default new Vuex.Store({
 
     discovered ({ discovered }) { return discovered },
     shadowed ({ shadows }) { return shadows },
-
+    shadowmodels ({ shadows }) {
+      const models = []
+      for (var nodeid in shadows) {
+        for (var modelid in shadows[nodeid]) {
+          models.push(shadows[nodeid][modelid])
+        }
+      }
+      return models
+    },
+    bricks ({ bricks }) { return bricks },
     selectedsource ({ selectedsource }) { return selectedsource },
     selectedtarget ({ selectedtarget }) { return selectedtarget },
     sources ({ sources }) { return sources },
@@ -77,6 +86,7 @@ export default new Vuex.Store({
     update ({ commit }, agentdata) {
       commit('updatediscovered', agentdata.discovered)
       commit('updateshadows', agentdata.shadows)
+      commit('updatebricks', agentdata.bricks)
     },
 
     set ({ dispatch }, nodeid, modelid, propname, value) {
@@ -93,19 +103,28 @@ export default new Vuex.Store({
       // router.push('Discovered') // back to discovered page
     },
 
-    selectsource ({ commit, getters }, uri) {
+    selectsource ({ commit, getters, dispatch }, uri) {
       if (getters.selectedsource === uri) {
         commit('clearseletedsource')
       } else {
         commit('setselectedsource', uri)
+        if (getters.selectedsource && getters.selectedtarget) {
+          dispatch('wire', [getters.selectedsource, getters.selectedtarget])
+          commit('clearseletedsource')
+          commit('clearseletedtarget')
+        }
       }
     },
     selecttarget ({ commit, getters, dispatch }, uri) {
-      commit('setselectedtarget', uri)
-      if (getters.selectedsource && getters.selectedtarget) {
-        dispatch('wire', [getters.selectedsource, getters.selectedtarget])
-        commit('clearseletedsource')
+      if (getters.selectedtarget === uri) {
         commit('clearseletedtarget')
+      } else {
+        commit('setselectedtarget', uri)
+        if (getters.selectedsource && getters.selectedtarget) {
+          dispatch('wire', [getters.selectedsource, getters.selectedtarget])
+          commit('clearseletedsource')
+          commit('clearseletedtarget')
+        }
       }
     },
 
@@ -124,9 +143,13 @@ export default new Vuex.Store({
       dispatch('websocket/send', ['uw', wiredata])
     },
 
-    addbrick () {},
+    addbrick ({ dispatch }, wiredata) {
+      dispatch('websocket/send', ['ab', wiredata])
+    },
 
-    removebrick () {},
+    removebrick ({ dispatch }, wiredata) {
+      dispatch('websocket/send', ['rb', wiredata])
+    },
 
     searchbricks () {},
 
