@@ -1,37 +1,39 @@
 <template>
-  <div class="shadow">
+  <div class="brick">
 
-    <productheader
-      class="productheader"
+    <blockheader
       :imageurl="props.imageurl"
       :company="props.company"
       :name="props.name"
       :description="props.description">
 
-      <div class="closebutton" slot="top" @click="removebrick([product.nodeid,product.id])">
+      <div class="closebutton" slot="top" @click="unshadow(model.nodeid)">
         <f7-icon md="material:close" color="white"/>
       </div>
+
       <div class="settingsbutton" slot="bottom" @click="togglesettings">
         <f7-icon md="material:settings" size="medium" :color="showsettings ? 'blue' : 'white'"/>
       </div>
-    </productheader>
 
-    <div class="shadowproperties">
+    </blockheader>
+
+    <div class="brickproperties">
       <div v-if="!showsettings">
         <div v-for="(meta, propname, index) in control" :key="'control_'+index" class="control" >
-          <wireable
-            :nodeid="product.nodeid"
-            :modelid="product.id"
+          <connectable
+            :showconnectors="showconnectors"
+            :nodeid="model.nodeid"
+            :modelid="model.id"
             :propname="propname">
             <component
               :is="meta.display+'Prop'"
               :meta="meta"
               :value="propertyValue(props, propname)"
-              :nodeid="product.nodeid"
-              :modelid="product.id"
+              :nodeid="model.nodeid"
+              :modelid="model.id"
               :propname="propname"
             />
-          </wireable>
+          </connectable>
         </div>
       </div>
 
@@ -41,8 +43,8 @@
             :is="meta.display+'Prop'"
             :meta="meta"
             :value="propertyValue(props, propname)"
-            :nodeid="product.nodeid"
-            :modelid="product.id"
+            :nodeid="model.nodeid"
+            :modelid="model.id"
             :propname="propname"
           />
          </div>
@@ -51,8 +53,8 @@
             :is="meta.display+'Prop'"
             :meta="meta"
             :value="propertyValue(props, propname)"
-            :nodeid="product.nodeid"
-            :modelid="product.id"
+            :nodeid="model.nodeid"
+            :modelid="model.id"
             :propname="propname"
           />
         </div>
@@ -63,24 +65,24 @@
 
 <script>
 
-import ProductHeader from './ProductHeader.vue'
+import BlockHeader from './BlockHeader.vue'
 
-import ImageProp from './Properties/ImageProp.vue'
-import TextProp from './Properties/TextProp.vue'
-import NumberProp from './Properties/NumberProp.vue'
-import StateProp from './Properties/StateProp.vue'
-import ButtonProp from './Properties/ButtonProp.vue'
-import ToggleProp from './Properties/ToggleProp.vue'
-import ChoiceProp from './Properties/ChoiceProp.vue'
-import SelectProp from './Properties/SelectProp.vue'
+import ImageProp from '../Properties/Image.vue'
+import TextProp from '../Properties/Text.vue'
+import NumberProp from '../Properties/Number.vue'
+import StateProp from '../Properties/State.vue'
+import ButtonProp from '../Properties/Button.vue'
+import ToggleProp from '../Properties/Toggle.vue'
+import ChoiceProp from '../Properties/Choice.vue'
+import SelectProp from '../Properties/Select.vue'
 
-import Wireable from '@/components/Wire/Wireable'
+import Connectable from '@/components/Connections/Connectable'
 
 import { mapActions } from 'vuex'
 
 export default {
 
-  props: ['product'],
+  props: ['model', 'showconnectors'],
 
   data: function () {
     return {
@@ -90,11 +92,11 @@ export default {
 
   computed: {
     metadata: function () {
-      return this.sortMetadataByIndex(this.product.meta)
+      return this.sortMetadataByIndex(this.model.meta)
     },
 
     props: function () {
-      return this.product.props
+      return this.model.props
     },
 
     header: function () {
@@ -114,7 +116,7 @@ export default {
   methods: {
     ...mapActions([
       'renderconnections',
-      'removebrick'
+      'unshadow'
     ]),
 
     sortMetadataByIndex: function (shadowmeta) {
@@ -167,7 +169,6 @@ export default {
     this.renderconnections()
   },
   components: {
-    productheader: ProductHeader,
     imageProp: ImageProp,
     textProp: TextProp,
     numberProp: NumberProp,
@@ -176,13 +177,14 @@ export default {
     toggleProp: ToggleProp,
     choiceProp: ChoiceProp,
     selectProp: SelectProp,
-    wireable: Wireable
+    blockheader: BlockHeader,
+    connectable: Connectable
   }
 }
 </script>
 
 <style>
-.shadow {
+.brick {
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto auto auto auto;
@@ -190,7 +192,8 @@ export default {
   width: max-content;
   background:rgba(255, 255, 255, 0.8);
 }
-.productheader {
+
+.blockheader {
   grid-column: 1;
   grid-row: 1 / span 3;
 }
@@ -209,7 +212,7 @@ export default {
 
 }
 
-.shadowproperties {
+.brickproperties {
   grid-column: 1;
   grid-row: 4;
 }

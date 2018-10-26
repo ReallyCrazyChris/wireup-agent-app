@@ -17,7 +17,7 @@
 
 <script>
 
-import ProductHeader from '../ProductHeader.vue'
+import ProductHeader from './ProductHeader.vue'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {

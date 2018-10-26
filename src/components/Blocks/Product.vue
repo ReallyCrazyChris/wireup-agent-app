@@ -1,14 +1,13 @@
 <template>
   <div class="product">
 
-    <productheader
-      class="productheader"
+    <blockheader
       :imageurl="props.imageurl"
       :company="props.company"
       :name="props.name"
       :description="props.description">
 
-      <div class="closebutton" slot="top" @click="unshadow(product.nodeid)">
+      <div class="closebutton" slot="top" @click="unshadow(model.nodeid)">
         <f7-icon md="material:close" color="white"/>
       </div>
 
@@ -16,22 +15,22 @@
         <f7-icon md="material:settings" size="medium" :color="showsettings ? 'blue' : 'white'"/>
       </div>
 
-    </productheader>
+    </blockheader>
 
     <div class="productproperties">
       <div v-if="!showsettings">
         <div v-for="(meta, propname, index) in control" :key="'control_'+index" class="control" >
           <connectable
             :showconnectors="showconnectors"
-            :nodeid="product.nodeid"
-            :modelid="product.id"
+            :nodeid="model.nodeid"
+            :modelid="model.id"
             :propname="propname">
             <component
               :is="meta.display+'Prop'"
               :meta="meta"
               :value="propertyValue(props, propname)"
-              :nodeid="product.nodeid"
-              :modelid="product.id"
+              :nodeid="model.nodeid"
+              :modelid="model.id"
               :propname="propname"
             />
           </connectable>
@@ -44,8 +43,8 @@
             :is="meta.display+'Prop'"
             :meta="meta"
             :value="propertyValue(props, propname)"
-            :nodeid="product.nodeid"
-            :modelid="product.id"
+            :nodeid="model.nodeid"
+            :modelid="model.id"
             :propname="propname"
           />
          </div>
@@ -54,8 +53,8 @@
             :is="meta.display+'Prop'"
             :meta="meta"
             :value="propertyValue(props, propname)"
-            :nodeid="product.nodeid"
-            :modelid="product.id"
+            :nodeid="model.nodeid"
+            :modelid="model.id"
             :propname="propname"
           />
         </div>
@@ -66,16 +65,16 @@
 
 <script>
 
-import ProductHeader from './ProductHeader.vue'
+import BlockHeader from './BlockHeader.vue'
 
-import ImageProp from './Properties/Image.vue'
-import TextProp from './Properties/Text.vue'
-import NumberProp from './Properties/Number.vue'
-import StateProp from './Properties/State.vue'
-import ButtonProp from './Properties/Button.vue'
-import ToggleProp from './Properties/Toggle.vue'
-import ChoiceProp from './Properties/Choice.vue'
-import SelectProp from './Properties/Select.vue'
+import ImageProp from '../Properties/Image.vue'
+import TextProp from '../Properties/Text.vue'
+import NumberProp from '../Properties/Number.vue'
+import StateProp from '../Properties/State.vue'
+import ButtonProp from '../Properties/Button.vue'
+import ToggleProp from '../Properties/Toggle.vue'
+import ChoiceProp from '../Properties/Choice.vue'
+import SelectProp from '../Properties/Select.vue'
 
 import Connectable from '@/components/Connections/Connectable'
 
@@ -83,7 +82,7 @@ import { mapActions } from 'vuex'
 
 export default {
 
-  props: ['product', 'showconnectors'],
+  props: ['model', 'showconnectors'],
 
   data: function () {
     return {
@@ -93,11 +92,11 @@ export default {
 
   computed: {
     metadata: function () {
-      return this.sortMetadataByIndex(this.product.meta)
+      return this.sortMetadataByIndex(this.model.meta)
     },
 
     props: function () {
-      return this.product.props
+      return this.model.props
     },
 
     header: function () {
@@ -178,7 +177,7 @@ export default {
     toggleProp: ToggleProp,
     choiceProp: ChoiceProp,
     selectProp: SelectProp,
-    productheader: ProductHeader,
+    blockheader: BlockHeader,
     connectable: Connectable
   }
 }
@@ -193,7 +192,8 @@ export default {
   width: max-content;
   background:rgba(255, 255, 255, 0.8);
 }
-.productheader {
+
+.blockheader {
   grid-column: 1;
   grid-row: 1 / span 3;
 }

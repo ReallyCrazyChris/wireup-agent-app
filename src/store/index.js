@@ -14,6 +14,7 @@ export default new Vuex.Store({
     discovered: {},
     shadows: {},
     bricks: {},
+    dashboard: {},
     sources: {},
     targets: {},
     selectedsource: null,
@@ -35,6 +36,7 @@ export default new Vuex.Store({
       return models
     },
     bricks ({ bricks }) { return bricks },
+    dashboard ({ dashboard }) { return dashboard },
     selectedsource ({ selectedsource }) { return selectedsource },
     selectedtarget ({ selectedtarget }) { return selectedtarget },
     sources ({ sources }) { return sources },
@@ -65,14 +67,11 @@ export default new Vuex.Store({
   mutations: {
 
     updatediscovered (state, discovered) { state.discovered = discovered },
-
     updateshadows (state, shadows) { state.shadows = shadows },
-
     updatebricks (state, bricks) { state.bricks = bricks },
 
     setselectedsource (state, uri) { state.selectedsource = uri },
     clearseletedsource (state) { state.selectedsource = null },
-
     setselectedtarget (state, uri) { state.selectedtarget = uri },
     clearseletedtarget (state) { state.selectedtarget = null },
 

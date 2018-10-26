@@ -33,8 +33,8 @@ const mutations = {
 const actions = {
 
   connect (store) {
-    const ws = new WebSocket('ws://127.0.0.1:9090')
-    // const ws = new WebSocket('ws://192.168.2.107:9090')
+    // const ws = new WebSocket('ws://127.0.0.1:9090')
+    const ws = new WebSocket('ws://192.168.2.107:9090')
     // const ws = new WebSocket('ws://10.81.131.170:9090')
 
     ws.onopen = function (event) {
