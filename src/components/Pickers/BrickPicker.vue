@@ -1,15 +1,12 @@
 <template>
     <div class="bricks">
-      <div class="brick" v-for="(item, index) in bricks" :key="index">
+      <div class="brick" v-for="(item, index) in bricks" :key="index" @click="addbrick([item.type])">
           <productheader
             :imageurl="item.imageurl"
             :company="item.type"
             :name="item.name"
             :description="item.description"
           >
-          <div class="addbutton" slot="top" @click="addbrick([item.type])">
-            <f7-icon md="material:add" color="white"/>
-          </div>
           </productheader>
       </div>
     </div>
@@ -51,6 +48,7 @@ export default {
 .brick {
   padding: 10px;
   width: 100%;
+  cursor: pointer;
 }
 
 .addbutton {

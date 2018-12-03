@@ -28,9 +28,11 @@ export default {
     uri: function () {
       return [this.nodeid, this.modelid, this.propname].join('/')
     },
+    // sourceid - string reference to the source uri
     sourceid: function () {
       return [this.nodeid, this.modelid, this.propname, 's'].join('-')
     },
+    // targetid - string reference to the target uri
     targetid: function () {
       return [this.nodeid, this.modelid, this.propname, 't'].join('-')
     },
@@ -70,9 +72,8 @@ export default {
 
 .connectable {
   display: grid;
-  grid-template-columns: 20px 210px 20px   ;
+  grid-template-columns: 20px 210px 20px;
   grid-template-rows: auto;
-
 }
 
 .target {

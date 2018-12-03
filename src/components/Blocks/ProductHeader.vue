@@ -12,6 +12,7 @@
 </template>
 
 <script>
+
 export default {
   props: ['imageurl', 'company', 'name', 'description']
 }
@@ -30,8 +31,6 @@ export default {
   grid-column: 1 / span 2;
   grid-row: 1 / span 3;
   width: 100%;
-  border-top: 1px solid #2196f3;
-  border-bottom: 1px solid #2196f3;
 }
 
 .name {

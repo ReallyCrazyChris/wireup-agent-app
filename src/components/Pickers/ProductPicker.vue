@@ -1,15 +1,12 @@
 <template>
     <div class="discovered">
-      <div class="discovereditem" v-for="(item, index) in discovered" :key="index" @click="shadow( index )">
+      <div class="discovereditem" v-for="(item, nodeid) in discovered" :key="nodeid" @click="doaction(['shadow', nodeid])">
           <productheader
             :imageurl="item[2]"
             :company="item[3]"
             :name="item[4]"
             :description="item[5]"
           >
-          <div class="addbutton" slot="top" @click="unshadow(nodeid)">
-            <f7-icon md="material:add" color="white"/>
-          </div>
           </productheader>
       </div>
     </div>
@@ -28,7 +25,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'shadow'
+      'doaction'
     ])
   },
   components: {
@@ -51,12 +48,7 @@ export default {
 .discovereditem {
   padding: 10px;
   width: 100%;
-}
-
-.addbutton {
-  text-align: center;
-  width: 2em;
-  cursor: pointer;
+  cursor:pointer;
 }
 
 </style>

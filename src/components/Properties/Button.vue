@@ -28,11 +28,11 @@ export default {
   methods: {
     set () {
       if (!this.pressstate) { this.pressstate = true }
-      this.$store.dispatch('websocket/send', ['udm', [ this.nodeid, this.modelid, this.propname, true ]])
+      this.$store.dispatch('websocket/send', ['updatemodel', this.nodeid, this.modelid, this.propname, true])
     },
     reset () {
       if (this.pressstate) { this.pressstate = false }
-      this.$store.dispatch('websocket/send', ['udm', [ this.nodeid, this.modelid, this.propname, false ]])
+      this.$store.dispatch('websocket/send', ['updatemodel', this.nodeid, this.modelid, this.propname, false])
     }
   }
 }

@@ -1,13 +1,13 @@
 <template>
   <div class="product">
 
-    <blockheader
+    <productheader
       :imageurl="props.imageurl"
       :company="props.company"
       :name="props.name"
       :description="props.description">
 
-      <div class="closebutton" slot="top" @click="unshadow(model.nodeid)">
+      <div class="closebutton" slot="top" @click="doaction(['unshadow', model.nodeid])">
         <f7-icon md="material:close" color="white"/>
       </div>
 
@@ -15,7 +15,7 @@
         <f7-icon md="material:settings" size="medium" :color="showsettings ? 'blue' : 'white'"/>
       </div>
 
-    </blockheader>
+    </productheader>
 
     <div class="productproperties">
       <div v-if="!showsettings">
@@ -65,8 +65,7 @@
 
 <script>
 
-import BlockHeader from './BlockHeader.vue'
-
+import ProductHeader from './ProductHeader.vue'
 import ImageProp from '../Properties/Image.vue'
 import TextProp from '../Properties/Text.vue'
 import NumberProp from '../Properties/Number.vue'
@@ -116,7 +115,7 @@ export default {
   methods: {
     ...mapActions([
       'renderconnections',
-      'unshadow'
+      'doaction'
     ]),
 
     sortMetadataByIndex: function (shadowmeta) {
@@ -177,7 +176,7 @@ export default {
     toggleProp: ToggleProp,
     choiceProp: ChoiceProp,
     selectProp: SelectProp,
-    blockheader: BlockHeader,
+    productheader: ProductHeader,
     connectable: Connectable
   }
 }
@@ -193,7 +192,7 @@ export default {
   background:rgba(255, 255, 255, 0.8);
 }
 
-.blockheader {
+.productheader {
   grid-column: 1;
   grid-row: 1 / span 3;
 }

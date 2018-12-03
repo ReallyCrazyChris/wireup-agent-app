@@ -13,7 +13,7 @@ export default {
   props: ['meta', 'value', 'nodeid', 'modelid', 'propname'],
   methods: {
     set () {
-      this.$store.dispatch('websocket/send', ['udm', [ this.nodeid, this.modelid, this.propname, !this.value ]])
+      this.$store.dispatch('websocket/send', ['updatemodel', this.nodeid, this.modelid, this.propname, !this.value])
     }
   }
 }

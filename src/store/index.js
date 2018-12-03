@@ -88,6 +88,10 @@ export default new Vuex.Store({
       commit('updatebricks', agentdata.bricks)
     },
 
+    doaction ({ dispatch }, action) {
+      dispatch('websocket/send', action)
+    },
+
     set ({ dispatch }, nodeid, modelid, propname, value) {
       dispatch('websocket/send', ['udm', [ nodeid, modelid, propname, value ]])
     },
@@ -135,19 +139,23 @@ export default new Vuex.Store({
     },
 
     wire ({ dispatch }, wiredata) {
-      dispatch('websocket/send', ['w', wiredata])
+      const produceruri = wiredata[0]
+      const consumeruri = wiredata[1]
+      dispatch('websocket/send', ['wire', produceruri, consumeruri])
     },
 
     unwire ({ dispatch }, wiredata) {
-      dispatch('websocket/send', ['uw', wiredata])
+      const produceruri = wiredata[0]
+      const consumeruri = wiredata[1]
+      dispatch('websocket/send', ['unwire', produceruri, consumeruri])
     },
 
-    addbrick ({ dispatch }, wiredata) {
-      dispatch('websocket/send', ['ab', wiredata])
+    addbrick ({ dispatch }, packagename) {
+      dispatch('websocket/send', ['addbrick', packagename])
     },
 
-    removebrick ({ dispatch }, wiredata) {
-      dispatch('websocket/send', ['rb', wiredata])
+    removebrick ({ dispatch }, modelid) {
+      dispatch('websocket/send', ['removemodel', modelid])
     },
 
     searchbricks () {},
