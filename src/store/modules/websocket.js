@@ -58,7 +58,7 @@ const actions = {
     }
 
     ws.onerror = function (event) {
-      console.log('WebSocket haserror .')
+      console.log('WebSocket haserror .', event)
     }
   },
   disconnect ({ commit, state, getters }) {
